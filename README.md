@@ -86,3 +86,344 @@ reverse=True
 문제 : 하노이의 탑
 
 3개의 기둥에서 각자 다른 크기로 이루어진 원반을 옮기는데 최적의 수를 구하기
+
+## Class 6
+### 알고리즘의 복잡도 (Complexity of Algorithms)
+시간 복잡도 (Time Complexity) : 문제의 크기와 이를 해결하는 데 걸리는 시간 사이의 관계
+
+공간 복잡도 (Space COmplexity) : 문제의 크기와 이를 해결하는 데 필요한 메모리 공간 사이의 관계
+
+평균 시간 복잡도 (Average Time Complexity) : 임의의 입력 패턴을 가정했을 때 소요되는 시간의 평균
+
+최악 시간 복잡도 (Worst-case Time Complexity) : 가 긴 시간을 소요하게 만드는 입력에 따라 소요되는 시간
+
+Big—O Notation
+
+점근 표기법 (asymptotic notation) 의 하나
+
+어떤 함수의 증가 양상을 다른 함수와의 비교로 표현
+
+(알고리즘의 복잡도를 표현할 때 흔히 쓰임)
+
+O(logn), O(n), O(n^2), O(2^n) 등으로 표기
+
+입력의 크기가 n 일 때
+
+O(logn) — 입력의 크기의 로그에 비례하는 시간 소요
+
+O(n) — 입력의 크기에 비례하는 시간 소요
+
+계수는 그다지 중요하지 않음
+
+선형 시간 알고리즘 —O(n)
+
+예 : n개의 무작위로 나열된 수에서 최댓값을 찾기 위해 선형 탐색 알고리즘을 적용
+
+최댓값 — 끝까지 다 살펴보기 전까지는 알 수 없음
+
+Average case : O(n)
+
+Worst case : O(n)
+
+로그 시간 알고리즘 — O(logn)
+
+예 : n 개의 크기 순으로 정렬된 수에서 특정 값을 값을 찾기 위해 이진 탐색 알고리즘을 적용
+
+이차 시간 알고리즘 — O(n^2)
+
+예 : 삽입 정렬(insertion sort)
+
+Best case : O(n)
+
+Worst case : O(n^2)
+
+보다 나은(낮은) 복잡도를 가지는 정렬 알고리즘
+
+예 : 병합 정렬(merge sort) — O(nlogn)
+
+참고 : 입력 패턴에 따라 정렬 속도에 차이가 있지만 정렬 속도에 차이가 있지만 정렬 문제에 대해 O(nlogn) 보다 낮은 복잡도를 갖는 알고리즘은 존재할 수 없음이 증명되어 있음
+
+1. 정렬할 데이터를 반씩 나누어 각각을 정렬시킨다. = O(logn)
+2. 정렬된 데이터를 두 묶음씩 한데 합친다. O(n)
+
+꽤나 복잡한 문제
+
+유명한 예 : 배낭문제 (Knapsack Problem)
+
+## Class 7
+### 연결 리스트 (Linked Lists) (1)
+추상적 자료구조 (Abstract Data Structure)
+
+Data
+
+- 예 : 정수, 문자열, 레코드, ...
+
+A set of operations
+
+- 삽입, 삭제, 순회...
+- 정렬, 탐색...
+
+기본적 연결 리스트
+
+67 ⇒ 34 ⇒ 58
+
+각각의 데이터들이 담겨져 있는 것을 Node라고 부름
+
+Node
+
+- Data
+- Link (next)
+
+Node 내의 데이터는 다른 구조로 이루어질 수 있음
+
+예. 문자열, 레코드, 또 다른 연결 리스트 등
+
+리스트의 맨 앞에 원소 : Head 맨 끝의 원소 : Tail
+
+＃of nodes : 3 연결 리스트 안에 노드가 몇 개 있는지 표기
+
+```python
+class Node:
+	def __init__(self, item):
+		self.data = item
+		self.next = None
+
+class LinkedList:
+	def __init__(self):
+		self.nodeCount = 0
+		self.head = None
+		self.tail = None
+```
+
+연산 정의
+
+1. 특정 원소 참조 (k 번째)
+2. 리스트 순회
+3. 길이 얻어내기
+4. 원소 삽입
+5. 원소 삭제
+6. 두 리스트 합치기
+
+```python
+def getAt(self, pos):
+	if pos <= 0 or pos > self.nodeCount:
+	    return None
+		i = 1
+		curr = self.head
+		while i < pos:
+			curr = curr.next
+			i += 1
+		return curr
+```
+
+배열과 비교한 연결 리스트
+
+저장공간
+
+- 배열 : 연속한 위치
+- 연결리스트 : 임의의 위치
+
+특정 원소 지칭
+
+- 배열 : 매우 간편 O(1)
+- 연결리스트 : 선형탐색과 유사 O(n)
+
+```python
+def traverse(self):
+	answer = []
+	i = 1
+	while <= self.nodeCount:
+		answer.append(self.getAt(i))
+	return answer
+
+  이렇게 하면 안됨.
+```
+
+## Class 8
+### 연결 리스트(Linked Lists) (2)
+
+연결 리스트 연산 — 원소의 삽입
+
+```python
+def insertAt(self, pos, newNode):
+	prev = self.getAt(pos - 1)
+	newNode.next = prev.next
+	prev.next = newNode
+	self.nodeCount += 1
+    
+pos가 가리키는 위치에 (1 <= pos <= nodeCount + 1)
+newNode를 삽입하고 성공 / 실패에 따라 True / False 를 리턴
+
+L.inssertAt(pos, newNode)
+```
+
+(1) 삽입하려는 위치가 리스트 맨 앞일 때
+
+- prev 없음
+- Head 조정 필요
+
+(2) 삽입하려는 위치가 리스트 맨 끝일 때
+
+- Tail 조정 필요
+
+빈 리스트에 삽입할 때? ⇒ 이 두 조건에 의해 처리됨
+
+```python
+def insertAt(self, pos, newNode):
+    if pos < 1 or pos > self.nodeCount + 1:
+	    return False
+
+	if pos == 1:
+		newNode.next = self.head
+		self.head = newNode
+	else:
+		prev = self.getAt(pos - 1)
+		newNode.next = prev.next
+		prev.next = newNode
+	if pos == self.nodeCount + 1:
+		self.tail = newNode
+
+	self.nodeCount += 1
+	return True
+```
+
+```python
+def insertAt(self, pos, newNode):
+	if pos < 1 or pos > self.nodeCount + 1:
+		return False
+
+	if pos == 1:
+		newNode.next = self.head
+		self.head = newNode
+	else:
+		if pos == self.nodeCount + 1:
+			prev = self.tail
+		else:
+			prev = self.getAt(pos - 1)
+		    newNode.next = prev.next
+			prev.next = newNode
+
+	if pos == self.nodeCount + 1:
+		self.tail = newNode
+
+	self.nodeCount += 1
+	return True
+```
+
+```python
+class LinkedList:
+	def __init__(self):
+		self.nodeCount = 0
+		self.head = None
+		self.tail = None
+
+	def  __repr__(self):
+		if self.nodeCount == 0:
+			return 'LinkedList: empty'
+
+		s = ' '
+		curr = self.head
+		while curr is not None:
+		    s += repr(curr.data)
+			if curr.next is not None:
+				s += ' -> '
+			curr = curr.next
+		return s
+
+	def getAt(self, pos):
+		if pos <= 0 or pos > self.nodeCount:
+			return None
+
+		i = 1
+		curr = self.head
+		while i < pos:
+			curr = curr.next
+			i += 1
+	    return curr
+
+	def insertAt(self, pos, newNode):
+		if pos < 1 or pos > self.nodeCount + 1:
+			return False
+				
+		if pos == 1:
+			newNode.next = self.next
+			self.next = newNode
+		else:
+			if pos == self.nodeCount + 1:
+			    prev = self.tail
+			else:
+				prev = self.getAt(pos - 1)
+			newNode.next = prev.next
+			prev.next = newNode
+
+		if pos == self. nodeCount + 1:
+			self.tail = newNode
+
+		self.nodeCount += 1
+		return True				
+```
+
+연결 리스트 원소 삽입의 복잡도
+
+맨 앞에 삽입하는 경우 : O(1)
+
+중간에 삽입하는 경우 : O(n)
+
+맨 끝에 삽입하는 경우 : O(1)
+
+연결 리스트 연산 — 원소의 삭제
+
+```python
+def popAt(self, pos):
+
+pos 가 가리키는 위치의 (1 <= pos <= nodeCount)
+node를 삭제하고 그 node의 데이터를 리턴
+
+r = L.popAt(pos)
+ 코드 구현 주의사항
+(1) 삭제하려는 node가 맨 앞의 것일 때
+=> prev 없음
+=> Head 조정 필요
+
+(2) 리스트 맨 끝의 node를 삭제할 때
+=> Tail 조정 필요
+
+* 유일한 노드를 삭제할 때? => 이 두 조건에 의해 처리되는가?
+```
+
+삭제하려는 node 가 마지막 node일 때, 즉 pos == nodeCount 인 경우?
+
+하지만 한 번에 처리할 수 없다. (prev를 찾을 방법이 없으므로) ⇒ 앞에서부터 찾아와야 함
+
+연결 리스트 원소 삭제의 복잡도
+
+맨 앞에서 삭제하는 경우 : O(1)
+
+중간에서 삭제하는 경우 : O(n)
+
+맨 끝에서 삭제하는 경우 : O(n)
+
+연결 리스트 연산 — 두 리스트의 연결
+
+```python
+def concat(self, L):
+    self.tail.next = L.head
+	self.tail = L.tail
+	self.nodeCount += L.nodeCount
+
+ 인자 L 리스트가 빈 것이면 아래대로
+def concat(self, L):
+	self.tail.next = L.head
+	if L.tail:
+	    self.tail = L.tail
+	self.nodeCount += L.nodeCount
+    
+ 연결 리스트 self의 뒤에 또다른 연결 리스트인 L을 이어붙임
+L1.concat(L2)
+
+self.tail.next = L2.head
+
+self.tail = L2.tail
+
+```
+
