@@ -427,3 +427,230 @@ self.tail = L2.tail
 
 ```
 
+## Class 9
+### 연결 리스트(Linked Lists) (3)
+연결 리스트가 힘을 발휘할 때
+
+순서대로 연결할 때 (스마트폰 팝업화면?) 순서지어 연결 되있는 화면
+
+카카오톡을 위로 밀어 실행 종료할 때
+
+최대 장점 : 삽입과 삭제가 유연하다는 것이 가장 큰 장점
+
+새로운 메서드들을 만들자:
+
+insertAfter(prev, newNode) ⇒ 맨 앞에서 어떻게?
+
+popAfter(prev) ⇒ 맨 앞에서는 어떻게?
+
+조금 변형된 연결 리스트
+
+맨 앞에 dummy node 를 추가한 형태로
+
+```python
+class LinkedList:
+	def __init__(self):
+		self.nodeCount = 0
+		self.head = Node(None)
+		self.tail = None
+		self.head.next = self.tail
+
+	리스트 순회
+	def traverse(self):
+		result []
+		curr = self.head
+		while curr.next:
+		    curr = curr.next
+			result.append(curr.data)
+		return result
+		
+	k번째 원소 얻어내기
+	def getAt(self, pos):
+		if pos < 1 or pos > self.nodeCount:
+			return None
+			i = 0
+			curr = self.head
+			while i < pos:
+			    curr = curr.next
+				i += 1
+			return curr
+		
+# getAt(0) = Head
+
+def insertAfter(self, prev, newNode):
+	newNode.next = prev.next
+	if prev.next is None:
+		self.tail = newNode
+	prev.next = newNode
+	self.nodeCount += 1
+	return True 
+
+prev가 가리키는 node의 다음에 newNode를 삽입하 성공/ 실패에 따라 True/False 를 추력
+
+L.insertAfter(prev, newNode)
+
+```
+
+메서드 insertAt()의 구현
+
+def insertAt(self, pos, newNode):
+
+이미 구현한 insertAfter() 를 호출하여 이용하는 것으로
+
+1. pos 범위 조건 확인
+2. pos == 1 인 경우에는 head 뒤에 새 node 삽입
+3. pos == nodeCount + 1 인 경우는 prev ← tail
+4. 그렇지 않은 경우에는 prev ← getAt(...)
+
+```python
+def insertAt(self, pos, newNode):
+	if pos < 1 or pos > self.nodeCount + 1:
+		return False
+
+	if pos != 1 and pos == self.nodeCount + 1:
+		prev = self.tail
+	else:
+		prev = self.getAt(pos - 1)
+	return self.insertAfter(prev, newNode)
+
+```
+
+연결 리스트 연산 — 원소의 삭제
+
+```python
+def popAfter(self, prev):
+prev의 다음 node를 삭제하고 그 node의 data를 리턴
+
+r = L.popAfter(prev)
+
+(1) prev가 마지막 node일 때 (prev.next == None)
+-> 삭제할 node 없음
+-> return Nond
+
+(2) 리스트 맨 끝의 node를 삭제할 때 (curr.next == None)
+-> Tail 조정 필요
+
+```
+
+두 리스트의 연결
+
+```python
+L1.concat(L2)
+
+self.tail.next = L2.head.next
+
+def concat(self, L):
+	self.tail.next = L.head.next
+	if L.tail:
+		self.tail = L.tail
+	self.nodeCount += L.nodeCount
+
+```
+
+## Class 10
+### 양방향 연결 리스트 (Doubly Linked Lists)
+한 쪽으로만 링크를 연결하지 말고, 양쪽으로! → 앞으로도 (다음 node) 뒤로도 (이전 node) 진행 가능
+
+Node 의 구조 확장
+
+```python
+class Node:
+    def __init__(self, item):
+	    self.data = item
+		self.prev = None
+		self.next = None
+```
+
+리스트 처음과 끝에 dummy node를 두자 ! → 데이터를 담고 있는 node 들은 모두 같은 모양
+
+```python
+class DoublyLinkedList:
+	def __init__(self, item):
+		self.nodeCount = 0
+		* self.head = Node(None)
+		* self.tail = Node(None)
+		self.head.prev = None
+		* self.head.next = self.tail
+		* self.head.prev = self.head
+		self.tail.next = None
+
+* 중요 표시
+```
+
+```python
+리스트 순회
+def traverse(self):
+	result = []
+	curr = self.head
+	while curr.next.next:
+		curr = curr.next
+		result.append(curr.data)
+	return result
+
+리스트 역순회
+def reverse(self):
+	result = []
+	curr = self.tail
+	while curr.prev.prev:
+		curr = curr.prev
+			result.append(curr.data)
+	return result
+
+L.insertAfter(prev, newNode)
+
+원소의 삽입
+def insertAfter(self, prev, newNode):
+	next = prev.next
+    newNode.prev = prev
+	newNode.next = next
+	prev.next = newNode
+	next.prev = newNode
+	self.nodeCount += 1
+	return True
+    
+특정 원소 얻어내기
+def getAt(self, pos):
+	if pos < 0 or pos > self.nodeCount:
+		return None
+	i = 0
+	curr = self.head
+	while i < pos:
+		curr = curr.next
+		i += 1
+	return curr
+
+원소의 삽입
+def insertAt(self, pos, newNode):
+	if pos < 1 or pos > self.nodeCount + 1:
+		return False
+								
+	prev = self.getAt(pos - 1)
+	return self.insertAfter(prev, newNode)
+```
+
+리스트 마지막에 원소 삽입하면? → 마지막에 원소를 넣으면 어떻게 처리할지 기재되어 있지 않음
+
+```python
+def getAt(self, pos):
+	if pos < 0 or pos > self.nodeCount:
+		return None
+
+	if pos > self.nodeCount // 2:
+		i = 0
+		curr = self.tail
+		while i < self.nodeCount - pos + 1:
+		    curr = curr.prev
+			i += 1
+		else:
+```
+
+```python
+def insertBefore(self, next, newNode):
+
+def popAfter(self, prev):
+def popBefore(self, next):
+def popAt(self, pos):
+
+def concat(self, L):
+
+```
