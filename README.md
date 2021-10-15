@@ -654,3 +654,137 @@ def popAt(self, pos):
 def concat(self, L):
 
 ```
+
+## Class 11
+### 스택 (Stacks)
+이전에 배운 것들은 다른 자료구조에 이용될 수 있는 아주 기본적인 것이었다면
+
+이번부터는 특정한 문제를 풀기 위한 알고리즘
+
+스택 (Stack)
+
+- 자료 (data element) 를 보관할 수 있는 (선형) 구조
+- 단, 넣을 때에는 한 쪽 끝에서 밀어 넣어야 하고 → push 연산
+- 꺼낼 때에는 같은 쪽에서 뽑아 꺼내야 하는 제약이 있음 → pop 연산
+- 후입선출 (LIFO - Last-In First-Out) 특징을 가지는 선형 자료구조
+
+스택의 동작
+
+초기상태 : 비어있는 스택(empty stack)
+
+데이터 원소 A를 스택에 추가
+
+데이터 원소 B를 스택에 추가
+
+데이터 원소 꺼내기
+
+비어 있는 스택에서 데이터 원소를 꺼내려 할 때 → 스택 언더플로우(stack underflow)
+
+꽉 찬 스택에 데이터 원소 넣으려 할 때 → 스택 오버플로우(stack overflow)
+
+```python
+S = Stack()
+s.push(A)
+S.push(B)
+r1 = S.pop()
+r2 = S.pop()
+r3 = S.pop()
+```
+
+(1) 배열 (array) 을 이용하여 구현
+
+- Python 리스트와 메서드들을 이용
+
+(2) 연결 리스트 (linked list)를 이용하여 구현
+
+- 지난 강의에서 마련한 양방향 연결 리스트 이용
+
+연산의 정의
+
+- size() - 현재 스택에 들어 있는 원소의 수를 구함
+- isEmpty() - 현재 스택이 비어 있는지를 판단
+- pust(x) - 데이터 원소 x를 스택에 추가
+- pop() - 스택의 맨 위에 저장된 데이터 원소를 제거 (또한, 반환)
+- peek() - 스택의 맨 위에 저장된 데이터 원소를 반환 (제거하지 않음)
+
+```python
+#배열로 구현한 스택
+class ArrayStack:
+
+#스택의 크기를 리턴
+	def size(self):
+		return len(self.data)
+
+#스택이 비어 있는지 판단
+	def isEmpty(self):
+		return self.size() == 0
+
+#데이터 원소를 추가
+	def push(self, item):
+		self.data.append(item)
+
+#데이터 원소를 삭제(리턴)
+	def pop(self):
+		return self.data.pop()
+
+#스택의 꼭대기 원소 반환
+	def peek(self):
+		return self.data[-1]
+
+```
+
+```python
+from doublylinkedlist import Node
+from doublylinkedlist import DoublyLinkedList
+
+class LinkedListStack:
+
+	def __init__(self):
+		self.data = DoublyLinkedList()
+
+	def size(self):
+		return self.data.getLength()
+
+	def isEmpty(self):
+		return self.size() == 0
+
+	def push(self, item):
+		node = Node(item)
+		self.data.insertAt(self.size() + 1, node)
+
+	def pop(self):
+		return self.data.popAt(self.size())
+
+	def peek(self):
+		return self.data.getAt(self.size()).data
+```
+
+```python
+from pythonds.basic.stack import Stack
+S = Stack()
+dir(S)
+#파이썬 스택 라이브러리
+```
+
+연습문제 — 수식의 괄호 유효성 검사
+
+올바른 수식:
+
+- (A + B)
+- {(A + B) * C}
+- [(A + B) * (C + D)]
+
+올바르지 않은 수식:
+
+- (A + B
+- A + B)
+- {A * (B + C })
+- [(A + B) * (C + D)}
+
+알고리즘 설계 — 수식을 왼쪽부터 한 글자씩 읽어서:
+
+- 여는 괄호 - ( or { or [ -를 만나면 스택에 푸시
+- 닫는 괄호 - ) or } or ] - 를 만나면:
+    - 스택이 비어 있으면 올바르지 않은 수식
+    - 스택에서 pop, 쌍을 이루는 여는 괄호인지 검사
+        - 맞지 않으면 올바르지 않은 수식
