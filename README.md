@@ -876,3 +876,207 @@ prec = {
     - 스택의 peek() 연산 이용
 - 스택에 남아 있는 연산자를 모두 pop() 하는 순환문
     - while not opStack.isEmpty():
+
+## Class 13
+### 스택의 응용 : 후위 표기 수식 계산
+중위 표기법 (infix notation) 
+
+- 연산자가 피연산자들의 사이에 위치
+- (A + B) * (C + D)
+
+후위 표기법 (postifx notation)
+
+- 연산자가 피연산자들의 뒤에 위치
+- A B + C D + *
+
+알고리즘의 설계
+
+후위 표현식을 왼쪽부터 한 글자씩 읽어서
+
+피연산자면 스택에 push
+
+연산자를 만나면 스택에서 pop → (1), 또 pop → (2)
+
+(2) 연산 (1) 을 계산, 이 결과를 스택에 push
+
+수식의 끝에 도달하면 스택에서 pop → 이것이 계산 결과
+
+```python
+def splitTokens(exprStr)
+	tokens = []
+	val = 0
+	valProcessing = False
+	for c in exprStr:
+		if c == ' ':
+			continue
+		if c in '0123456789':
+			val = val * 10 int(c)
+			valProcessing = True
+		else:
+			if valProcessing:
+				toekns.append(val)
+				val = 0
+			valProcessing = False
+			tokens.append(c)
+	if valProcessing:
+		toekns.append(val)
+
+return tokens
+```
+
+```python
+from stacks import ArrayStack as Stack
+
+def infixToPostfix(tokenList):
+	prec = {
+		'*' : 3,
+		'/' : 3,
+		'+' : 2,
+		'-' : 2.
+		'(' : 1
+	}
+
+	opStack = Stack()
+	postfixList = []
+
+	for token in tokenList:
+		if type(token) is int:
+			pass
+		elif token == '(':
+			pass
+		elif token == ')':
+			pass
+		else:
+			pass
+
+	while not opStack.isEmpty():
+		pass
+
+	return postfixList
+
+```
+
+```python
+from stacks import ArrayStack as Stack
+
+	def postfixEval(tokenList)
+		valStack = Stack()
+
+		for token in tokenList:
+			if type(token) is int:
+				pass
+			elif token == '*':
+				pass
+			elif token == '/':
+				pass
+			elif token == '+':
+				pass
+			elif token == '-':
+				pass
+
+		return valStack.pop()
+
+def solution(expr):
+	tokens = splitTokens(expr)
+	postfix = infixToPostfix(tokens)
+	val = postfixEval(postfix)
+	return val
+```
+
+## Class 14
+### 큐 (Queue)
+자료 (data element) 를 보관할 수 있는 (선형) 구조
+
+단, 넣을 때에는 한 쪽 끝에서 밀어 넣어야 하고
+
+→ 인큐 (enqueue) 연산
+
+꺼낼 때에는 반대 쪽에서 뽑아 꺼내야 하는 제약이 있음
+
+→ 디큐 (dequeue) 연산
+
+선입선출 (FIFO - First-In First-Out) 특징을 가지는 선형 자료구조
+
+대기열 = 큐
+
+```python
+#초기 상태 : 비어있는 큐 (empty Queue)
+Q = Queue()
+
+#데이터 원소 A를 큐에 추가
+Q.enqueue(A)
+
+#데이터 원소 B를 큐에 추가
+Q.enqueue(B)
+
+#데이터 원소 꺼내기
+r1 = Q.dequeue() # r1 = 'A'
+r2 = Q.dequeue() # r2 = 'B'
+
+```
+
+큐의 추상적 자료구조 구현
+
+(1) 배열 (array) 을 이용하여 구현
+
+- Python 리스트와 메서드들을 이용
+
+(2) 연결 리스트 (linked list) 를 이용하여 구현
+
+- 이전 강의에서 마련한 양방향 연결 리스트 이용
+
+연산의 정의
+
+- size() - 현재 큐에 들어 있는 데이터 원소의 수를 구함
+- isEmpty() - 현재 큐가 비어 있는지를 판단
+- enqueue(x)  - 데이터 원소 x를 큐에 추가
+- dequeue() - 큐의 맨 앞에 저장된 데이터 원소를 제거 (또한, 반환)
+- peek() - 큐의 맨 앞에 저장된 데이터 원소를 반환 (제거하지 않음)
+
+```python
+#배열로 구현
+class ArrayQueue:
+
+#빈 큐를 초기화
+	def __init__(self):
+		self.data = []
+
+#큐의 크기를 리턴
+	def size(self):
+		return len(self.data)
+
+#큐가 비어 있는지 판단
+	def isEmpty(self):
+		return self.size() == 0
+
+#데이터 원소를 추가
+	def enqueue(self,item):
+		self.data.append(item)
+
+#데이터 원소를 삭제(리턴)
+	def dequeue(self):
+		return self.data.pop(0)
+
+#큐의 맨 앞 원소 반환
+	def peek(self):
+		return self.data[0]
+```
+
+배열로 구현한 큐의 연산 복잡도
+
+size() = O(1)
+
+isEmpty() = O(1)
+
+enqueue() = O(1)
+
+dequeue() = O(n) → 맨 앞 원소를 꺼내면 뒤에 있는 모든 원소를 앞으로 당겨야함
+
+peek() = O(1)
+
+```python
+#이중 연결 리스트로 큐를 구현
+class linkedList
+
+```
+
