@@ -1080,3 +1080,71 @@ class linkedList
 
 ```
 
+## Class 15
+### 환형 큐(Circular Queues)
+큐 (Queue) 의 사용
+
+자료를 생성하는 작업과 그 자료를 이용하는 작업이 비동기적으로 (asynchronously) 일어나는 경우
+
+Producer 가 만든 자료를 Consumer 가 차곡차곡 쌓인 데이터를 순서대로 꺼내는 경우
+
+![Screenshot_20211020-230913_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c33c2c40-3dd0-4ac3-a7d1-1896472c1ecf/Screenshot_20211020-230913_Chrome.jpg)
+
+자료를 생성하는 작업이 여러 곳에서 일어나는 경우
+
+Producer 1 ,2  → Consumer
+
+![Screenshot_20211020-230939_Notion.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b59a2905-fb9d-4751-9a63-857b3acd6a94/Screenshot_20211020-230939_Notion.jpg)
+
+자료를 이용하는 작업이 여러 곳에서 일어나는 경우
+
+Producer → Consumer 1, 2
+
+![Screenshot_20211020-230955_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11f23195-6563-4b97-b377-b7489cf83bad/Screenshot_20211020-230955_Chrome.jpg)
+
+자료를 생성하는 작업과 그 자료를 이용하는 작업이 양쪽 다 여러 곳에서 일어나는 경우 ex.운영체제
+
+Producer 1, 2 → Consumer 1, 2
+
+![Screenshot_20211020-230831_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d4815c2c-608a-43f4-9026-91596838a105/Screenshot_20211020-230831_Chrome.jpg)
+
+자료를 처리하여 새로운 자료를 생성하고, 나중에 그 자료를 또 처리해야 하는 작업의 경우
+
+![Screenshot_20211020-231220_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/01f8318d-32bf-4e4e-b92e-63f7219bda7f/Screenshot_20211020-231220_Chrome.jpg)
+
+환형 큐 (Circular Queue)
+
+정해진 개수의 저장공간을 빙 돌려가며 이용
+
+운영체제 등에서는 리소스가 한정되있기 때문에 큐의 길이를 한정함
+
+큐가 가득 차면 ? → 더이상 원소를 넣을 수 없음 (큐 길이를 기억하고 있어야 함)
+
+![Screenshot_20211020-231307_Notion.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1e867393-3076-4196-9a72-b2facdd624c7/Screenshot_20211020-231307_Notion.jpg)
+
+![Screenshot_20211020-232006_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c143cc83-39a8-4a19-82ef-bdd4df6b0614/Screenshot_20211020-232006_Chrome.jpg)
+
+![Screenshot_20211020-231829_Notion.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/48877481-70c4-451f-a1fa-ccecb0ecb383/Screenshot_20211020-231829_Notion.jpg)
+
+![Screenshot_20211020-231431_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9438ca6c-be7b-480e-8ae2-7a48ce2cb12e/Screenshot_20211020-231431_Chrome.jpg)
+
+환형 큐의 추상적 자료구조 구현
+
+연산의 정의
+
+- size() - 현재 큐에 들어 있는 데이터 원소의 수를 구함
+- isEmpty() - 현재 큐가 비어 있는지를 판단
+- isFull() - 큐에 데이터 원소가 꽉 차 있는지를 판단
+- enqueue(x) - 데이터 원소 x를 큐에 추가
+- dequeue() - 큐의 맨 앞에 저장된 데이터 원소를 제거 (또한, 반환)
+- peek() - 큐의 맨 앞에 저장된 데이터 원소를 반환 (제거하지 않음)
+
+배열로 구현한 환형 큐
+
+정해진 길이 n (예에서는 6) 의 리스트를 확보해 두고
+
+Q.enqueue(A) → rear = A
+
+Q.enqueue(B....) → rear = B....
+
+front 와 rear 를 적절히 계산하여 배열을 환형으로 재활용
