@@ -1148,3 +1148,53 @@ Q.enqueue(A) → rear = A
 Q.enqueue(B....) → rear = B....
 
 front 와 rear 를 적절히 계산하여 배열을 환형으로 재활용
+
+
+## Class 16
+### 우선순위 큐 (Priority Queues)
+큐가 FIFO (First-In First-Out) 방식을 따르지 않고 원소들의 우선순위에 따라 큐에서 빠져나오는 방식
+
+작은 수가 우선순위가 높다고 가정
+
+Enqueue : 6 7 3 2
+
+Dequeue : 2 3 6 7
+
+ex. 운영체제의 CPU 스케줄러
+
+서로 다른 두 가지 방식이 가능함:
+
+1. Enqueue 할 때 우선순위 순서를 유지하도록
+2. Dequeue 할 때 우선순위 높은 것을 선택
+
+→ 어느 것이 더 유리할까? → 1번이 더 유리함 → Dequeue 할 때 모든 원소를 탐색하지 않아도 되기 때문
+
+서로 다른 두 가지 재료를 이용할 수 있음:
+
+1. 선형 배열 이용
+2. 연결 리스트 이용
+
+→ 어느 것이 더 유리할까? 시간적으로 볼 때는 연결 리스트가 유리하다 → 인큐를 할 때 정렬해야하니까 중간에 삽입할 경우가 많아 연결 리스트가 이용함
+
+→ 선형 배열은 공간 활용성이 우수
+
+```python
+from doublylinkedlist import Node, DoublyLinkedList
+
+#양방향 연결 리스트를 이용하여 빈 큐를 초기화
+class PriorityQueue:
+
+	def __init__(self, x):
+		self.queue = DoublyLinkedList
+
+class ProiortyQueue:
+
+#주의: 양방향 연결 리스트의 getAt() 메서드를 이용하지 않음! -> 왜? 
+def enqueue(self, x):
+newNode = Node(x)
+curr = [빈칸]
+while [빈칸] and [빈칸]:
+curr = curr.next
+self.queue.[빈칸](curr.newNode)
+
+```
