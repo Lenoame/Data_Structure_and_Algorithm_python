@@ -1381,3 +1381,36 @@ class BinaryTree:
 2. Right subtree
 3. 자기 자신
 
+## Class 19
+### 이진 트리 - 넓이 우선 순회 (breadth first traversal)
+넓이 우선 순회 (Breadth First Traversal)
+
+- 원칙
+    - 수준 (level) 이 낮은 노드를 우선적으로 방문
+    - 같은 수준의 노드들 사이에는
+        - 부모 노드의 방문 순서에 따라 방문
+        - 왼쪽 자식 노드를 오른쪽 자식보다 먼저 방문
+    - 재귀적 (recursive) 방법이 적합한가? → 적합하지 않음
+    - 한 노드를 방문했을 대, 나중에 방문할 노드들을 순서대로 기록해 두어야 함 → 큐 (Queue)를 이용하면 어떨까?
+    - 
+
+루트 노드부터 낮은 레벨 순 (왼쪽 → 오른쪽) 으로 순회함
+
+
+큐를 이용해서 이후에 방문해야하는 노드들을 순서대로 정렬함
+
+```python
+#넓이 우선 순회 알고리즘 구현
+class BinaryTree:
+
+def bft(self):
+
+```
+
+1. (초기화) traversal ← 빈 리스트, q ← 빈 큐
+2. 빈 트리가 아니면, root node 를 q 에 추가 (enqueue)
+3. q 가 비어 있지 않은 동안
+    1. node ← q 에서 원소를 추출 (dequeue)
+    2. node 를 방문
+    3. node 의 왼쪽, 오른쪽 자식 (이 있으면) 들을 q에 추가
+4. q 가 빈 큐가 되면 모든 노드 방문 완료
