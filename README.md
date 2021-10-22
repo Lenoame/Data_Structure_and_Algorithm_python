@@ -1523,3 +1523,157 @@ T.insert(4, 'Peter')
 높이의 균형을 유지함으로써 O(logn) 의 탐색 복잡도 보장
 
 삽입, 삭제 연산이 보다 복잡
+
+## Class 22
+### 힙(Heaps)
+이진 트리의 한 종류 (이진 힙 - binary heap)
+
+1. 루트 (root) 노드가 언제나 최댓값 또는 최솟값을 가짐
+    1. 최대 힙 (max heap), 최소 힙 (min heap)
+2. 완전 이진 트리여야 함
+
+최대 힙 (Max Heap) 의 예
+
+![Screenshot_20211022-205828_Notion.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f3f78d5b-5f84-447c-aa8b-95278882aae3/Screenshot_20211022-205828_Notion.jpg)
+
+재귀적으로도 정의 됨 (어느 노드를 루트로 하는 서브트리도 모두 최대 힙)
+
+이진 탐색 트리와의 비교
+
+1. 원소들은 완전히 크기 순으로 정렬되어 있는가?
+2. 특정 키 값을 가지는 원소를 빠르게 검색할 수 있는가?
+3. 부가의 제약 조건은 어떤 것인가? (완전 이진 트리)
+
+최대 힙 (Max Heap) 의 추상적 자료구조
+
+연산의 정의
+
+- **init**() — 빈 최대 힙을 생성
+- insert(item) — 새로운 원소를 삽입
+- remove() — 최대 원소 (root node) 를 반환 (그리고 동시에 이 노드를 삭제
+
+데이터 표현의 설계
+
+배열을 이용한 이진 트리의 표현
+
+노드 번호 m 을 기준으로
+
+- 왼쪽 자식의 번호 : 2 * m
+- 오른쪽 자식의 번호 : 2 * m + 1
+- 부모 노드의 번호 : m // 2
+
+완전 이진 트리이므로 노드의 추가 / 삭제는 마지막 노드에서만
+
+
+코드의 구현 — 빈 힙 생성
+
+```python
+class Maxheap:
+	def __init__(self):
+		self.data = [None]
+
+```
+
+최대 힙에 원소 삽입
+
+1. 트리의 마지막 자리에 새로운 원소를 임시로 저장
+2. 부모 노드와 키 값을 비교하여 위로, 위로, 이동
+
+
+
+최대 힙에 원소 삽입 — 복잡도
+
+원소의 개수가 n 인 최대 힙에 새로운 원소 삽입
+
+→ 부모 노드와의 대소 비교 최대 횟수 : log2
+
+최악 복잡도 O(logn) 의 삽입 연산
+
+삽입 연산의 구현 — insert(item) 메서드
+
+힌트 : python에서 두 변수의 값 바꾸기
+
+a = 3; b = 5
+
+a, b = b, a
+
+```python
+class MaxHeap:
+	def insert(self, item):
+		...
+
+```
+
+최대 힙에서 원소의 삭제
+
+1. 루트 노드의 제거 — 이것이 원소들 중 최댓값
+2. 트리 마지막 자리 노드를 임시로 루트 노드의 자리에 배치
+3. 자식 노드들과의 값 비교와 아래로, 아래로 이동
+    1. 자식은 둘 있을 수도 있는데, 어느 쪽으로 이동? (더 큰 값 쪽으로 이동)
+
+예
+
+최대 원소를 삭제하라! 
+
+1. 루트 노드의 제거 — 이것이 원소들 중 최댓값
+2. 트리 마지막 자리 노드를 임시로 루트 노드의 자리에 배치
+
+
+최대 힙으로부터 원소 삭제 — 복잡도
+
+원소의 개수가 n 인 최대 힙에서 최대 원소 삭제
+
+→ 자식 노드들과의 대소 비교 최대 회 : 2 * log2n
+
+최악 복잡도 O(logn) 의 삭제 연산
+
+삭제 연산의 구현 — remove() 메서드
+
+```python
+class MaxHeap:
+	def remove(self):
+		if len(self.data) > 1:
+			self.data[1], self.data[-1] = self.data[-1], self.data[1]
+			data = self.data.pop(-1)
+			self.maxHeapify(1)
+		else:
+			data = None
+		return data
+
+def maxHeapify(self, i):
+left = ...
+right = ...
+smallest = i
+#자신 (i), 왼쪽 자식(left), 오른쪽 자식(right) 중 최대를 찾음
+#-> 이것의 인덱스를 smallest 에 담음
+if smallest != i:
+#현재 노드 (i) 와 최댓값 노드 (smallest) 의 값 바꾸기
+#재귀적으로 maxHeapify 를 호출
+```
+
+최대/최소 힙의 응용
+
+1. 우선 순위 큐 (priority queue)
+    1. Enqueue 할 때 '느슨한 정렬' 을 이루고 있도록 함 : O(logn)
+    2. Dequeue 할 때 최댓값을 순서대로 추출 : O(logn)
+    3. 제 16강에서의 양방향 연결 리스트 이용 구현과 효율성 비교
+2. 힙 정렬 (heap sort)
+    1. 정렬되지 않은 원소들을 아무 순서로나 최대 힙에 삽입 : O(logn)
+    2. 삽입이 끝나면, 힙이 비게 될 때까지 하나씩 삭제 : O(logn)
+    3. 원소들이 삭제된 순서가 원소들의 정렬 순서
+    4. 정렬 알고리즘의 복잡도 : O(nlogn)
+
+힙 정렬 (heap sort)의 코드 구현
+
+```python
+def heapsort(unsorted):
+	H = MaxHeap()
+	for item in unsortedd:
+		H.insert(item)
+	sorted = []
+	d = H.remove()
+	while d:
+		sorted.append(d)
+		d = H.remove()
+	return sorted
+```
