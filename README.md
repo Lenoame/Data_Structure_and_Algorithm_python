@@ -1274,3 +1274,110 @@ degree : 0 → leaf nodes
 레벨 k - 2 까지는 모든 노드가 2개의 자식을 가진 포화 이진 트리
 
 레벨 k - 1 에서는 왼쪽부터 노드가 순차적으로 채워져 있는 이진 트리
+
+## Class 18
+### 이진 트리 (Binary Trees)
+이진 트리의 추상적 자료구조
+
+연산의 정의
+
+- size() — 현재 트리에 포함되어 있는 노드의 수를 구함
+- depth() — 현재 트리의 깊이 (또는 높이: height) 를 구함
+- 순회 (traversal)
+
+이진 트리의 구현 — 노드 (Node)
+
+```python
+#이진 트리의 구현 -- 노드 (Node)
+class Node:
+	def __init__(self, item):
+		self.data = item
+		self.left = None
+		self.right = None
+
+	def size(self):
+		l = self.left.size() if self.left else 0
+		r = self.right.size() if self.right else 0
+		return l + r + 1
+
+	def depth(self)
+
+#이진 트리의 구현 -- 트리 (Tree)
+class BinaryTree:
+	def __init__(self, r):
+		self.root = r
+
+#이진 트리의 구현 --size()
+#재귀적인 방법으로 쉽게 구할 수 있음!
+#전체 이진 트리의 size() = left subtree 의 size() + right subtree 의 size() + 1(자기 자신)
+
+	def size(self):
+		if self.root:
+			return self.root.size()
+		else:
+			return 0
+
+#이진 트리의 구현 --depth()
+	def depth(self):
+		if ...
+
+```
+
+이진 트리의 순회 (Traversal)
+
+- 깊이 우선 순회 (depth first traversal)
+    - 중위 순회 (in-order traversal)
+    - 전위 순회 (pre-order traversal)
+    - 후위 순회 (post-order traversal)
+        - 어떤 노드를 기준으로 했을 때 왼쪽 서브트리도 순회해야하고 오른쪽 서브트리도 순회해야 하는데 왼쪽 오른쪽 서브트리를 방문하는 사이에 방문하면 중위순회, 먼저 방문하면 전위순회, 모두 순회한 뒤에 방문하면 후위순회임
+    
+- 넓이 우선 순회 (breadth first traversal)
+
+중위 순회
+
+순회의 순서
+
+1. Left subtree
+2. 자기 자신
+3. Right subtree
+
+
+```python
+#중위 순회 (In-order Traversal)
+class Node:
+
+	def inorder(self):
+		tarversal = []
+		if self.left:
+			traversal += self.left.inorder()
+		traversal.append(self.data)
+		if self.right:
+			traversal += self.right.inorder()
+		return traversal
+
+class BinaryTree:
+
+	def inorder(self):
+		if self.root:
+			return self.root.inorder()
+		else:
+			return []
+```
+
+전위 순회  (Pre-order Traversal)
+
+순회의 순서
+
+1. 자기 자신
+2. Left subtree
+3. Right subtree
+
+
+후위 순회 (Post-order Traversal)
+
+순회의 순서
+
+1. Left subtree
+2. Right subtree
+3. 자기 자신
+
