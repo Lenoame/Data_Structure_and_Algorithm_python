@@ -1088,29 +1088,24 @@ class linkedList
 
 Producer 가 만든 자료를 Consumer 가 차곡차곡 쌓인 데이터를 순서대로 꺼내는 경우
 
-![Screenshot_20211020-230913_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c33c2c40-3dd0-4ac3-a7d1-1896472c1ecf/Screenshot_20211020-230913_Chrome.jpg)
 
 자료를 생성하는 작업이 여러 곳에서 일어나는 경우
 
 Producer 1 ,2  → Consumer
 
-![Screenshot_20211020-230939_Notion.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b59a2905-fb9d-4751-9a63-857b3acd6a94/Screenshot_20211020-230939_Notion.jpg)
 
 자료를 이용하는 작업이 여러 곳에서 일어나는 경우
 
 Producer → Consumer 1, 2
 
-![Screenshot_20211020-230955_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11f23195-6563-4b97-b377-b7489cf83bad/Screenshot_20211020-230955_Chrome.jpg)
 
 자료를 생성하는 작업과 그 자료를 이용하는 작업이 양쪽 다 여러 곳에서 일어나는 경우 ex.운영체제
 
 Producer 1, 2 → Consumer 1, 2
 
-![Screenshot_20211020-230831_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d4815c2c-608a-43f4-9026-91596838a105/Screenshot_20211020-230831_Chrome.jpg)
 
 자료를 처리하여 새로운 자료를 생성하고, 나중에 그 자료를 또 처리해야 하는 작업의 경우
 
-![Screenshot_20211020-231220_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/01f8318d-32bf-4e4e-b92e-63f7219bda7f/Screenshot_20211020-231220_Chrome.jpg)
 
 환형 큐 (Circular Queue)
 
@@ -1122,11 +1117,6 @@ Producer 1, 2 → Consumer 1, 2
 
 ![Screenshot_20211020-231307_Notion.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1e867393-3076-4196-9a72-b2facdd624c7/Screenshot_20211020-231307_Notion.jpg)
 
-![Screenshot_20211020-232006_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c143cc83-39a8-4a19-82ef-bdd4df6b0614/Screenshot_20211020-232006_Chrome.jpg)
-
-![Screenshot_20211020-231829_Notion.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/48877481-70c4-451f-a1fa-ccecb0ecb383/Screenshot_20211020-231829_Notion.jpg)
-
-![Screenshot_20211020-231431_Chrome.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9438ca6c-be7b-480e-8ae2-7a48ce2cb12e/Screenshot_20211020-231431_Chrome.jpg)
 
 환형 큐의 추상적 자료구조 구현
 
@@ -1414,3 +1404,122 @@ def bft(self):
     2. node 를 방문
     3. node 의 왼쪽, 오른쪽 자식 (이 있으면) 들을 q에 추가
 4. q 가 빈 큐가 되면 모든 노드 방문 완료
+
+## Class 20
+### 이진 탐색 트리 (Binary Search Trees) (1)
+
+모든 노드에 대해서
+
+- 왼쪽 서브트리에 있는 데이터는 모두 현재 노드의 값보다 작고
+- 오른쪽 서브트리에 있는 데이터는 모두 현재 노드의 값보다 큰 성질을 만족하는 이진 트리
+
+(중복되는 데이터 원소는 없는 것으로 가정)
+
+
+이진 탐색 트리를 이용한 데이터 검색
+
+
+(정렬된) 배열을 이용한 이진 탐색과 비교
+
+장점 : 데이터 원소의 추가, 삭제가 용이
+
+단점 : 공간 소요가 큼 → 항상 O(logn)의 탐색복잡도?
+
+이진 탐색 트리의 추상적 자료구조
+
+데이터 표현 - 각 노드는 (key, value) 의 쌍으로
+
+키를 이용해서 검색 가능
+
+보다 복잡한 데이터 레코드로 확장 가능
+
+연산의 정의
+
+- insert(key, data) — 트리에 주어진 데이터 원소를 추가
+- remove(key) — 특정 원소를 트리로부터 삭제 (연산 복잡!)
+- lookup(key) — 특정 원소를 검색
+- inorder() — 키의 순서대로 데이터 원소를 나열
+- min(), max() — 최소 키, 최대 키를 가지는 원소를 각각 탐색
+
+이진 탐색 트리에 원소 삽입
+
+## Class 21
+### 이진 탐색 트리 (Binary Search Trees) (2)
+이진 탐색 트리에서 원소 삭제
+
+1. 키 (key) 를 이용해서 노드를 찾는다.
+    1. 해당 키의 노드가 없으면, 삭제할 것도 없음
+    2. 찾은 노드의 부모 노드도 알고 있어야 함 (아래 2번 때문)
+2. 찾은 노드를 제거하고도 이진 탐색 트리 성질을 만족하도록 트리의 구조를 정리한다.
+
+인터페이스의 설계
+
+입력 : 키 (key)
+
+출력 : 삭제가 된 경우 True, 해당 키의 노드가 없는 경우 False
+
+```python
+class BinSearchTree:
+	def remove(self, key):
+		node, parent = self.lookup(key)
+		if node:
+			...
+			return True
+		else:
+			return False
+```
+
+이진 탐색 트리 구조의 유지
+
+삭제되는 노드가
+
+1. 말단 (leaf) 노드인 경우
+    1. 그냥 그 노드를 없애면 됨 → 부모 노드의 링크를 조정 (좌? 우?)
+2. 자식을 하나 가지고 있는 경우
+    1. 삭제되는 노드 자리에 그 자식을 대신 배치 → 자식이 왼쪽? 오른쪽? → 부모 노드의 링크를 조정 (좌? 우?)
+3. 자식을 둘 가지고 있는 경우
+    1. 삭제되는 노드보다 바로 다음 (큰) 키를 가지는 노드를 찾아 그 노드를 삭제되는 노드 자리에 대신 배치하고 이 노드를 대신 삭제
+
+```python
+class Node:
+	def countChildren(self(:
+		count = 0
+		if self.left:
+			count += 1
+		if self.right:
+			count += 1
+		return count
+```
+
+말단 (Leaf) 노드의 삭제
+
+
+자식이 하나인 노드의 삭제 (X를 삭제하는 경우)
+
+
+삭제되는 노드 (X) 가 root node 인 경우는 어떻게?
+
+→ 대신 들어오는 자식이 새로 root 가 됨
+
+자식이 둘인 노드의 삭제
+
+
+이진 탐색 트리가 별로 효율적이지 못한 경우
+
+```python
+T = BinSearchTree()
+T.insert(1, 'John')
+T.insert(2, 'Mary')
+T.insert(3, 'Anne')
+T.insert(4, 'Peter')
+
+```
+
+
+위 그림은 선형탐색과 비슷한 복잡도가 나옴
+
+보다 나은 성능을 보이는 이진 탐색 트리들
+
+높이의 균형을 유지함으로써 O(logn) 의 탐색 복잡도 보장
+
+삽입, 삭제 연산이 보다 복잡
